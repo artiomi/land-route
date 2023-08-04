@@ -62,7 +62,7 @@ class CountriesResourceParserTest {
         JSON_WRONG_LENGTH_LATLNG + "|latlng should contain exactly 2 values.",
         JSON_NULL_BORDERS + "|borders can't be null",
     }, delimiter = '|')
-    void failsToParseJson(String inputJson, String errorMessage) {
+    void throwsExceptionForJsonWithInvalidInputs(String inputJson, String errorMessage) {
       initParser(inputJson);
       assertThatThrownBy(() -> countriesResourceParser.getCountries())
           .isInstanceOf(IllegalArgumentException.class)

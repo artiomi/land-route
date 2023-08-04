@@ -27,56 +27,56 @@ class RouteFinderServiceTest {
     }
 
     @Test
-    void failsToCalculateRouteForNullFromCountry() {
+    void throwsExceptionIfCalculatesRouteForNullFromCountry() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute(null, "OMN"))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage("Parameters from & to should not be blank.");
     }
 
     @Test
-    void failsToCalculateRouteForNullToCountry() {
+    void throwsExceptionIfCalculatesRouteForNullToCountry() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute("OMN", null))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage("Parameters from & to should not be blank.");
     }
 
     @Test
-    void failsToCalculateRouteForNonExistingFromCountry() {
+    void throwsExceptionIfCalculatesRouteForNonExistingFromCountry() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute("MISSING", "OMN"))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage("Country with id:[MISSING] not found.");
     }
 
     @Test
-    void failsToCalculateRouteForNonExistingToCountry() {
+    void throwsExceptionIfCalculatesRouteForNonExistingToCountry() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute("OMN", "MISSING"))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage("Country with id:[MISSING] not found.");
     }
 
     @Test
-    void failsToCalculateRouteForFromCountryWithoutBorders() {
+    void throwsExceptionIfCalculatesRouteForFromCountryWithoutBorders() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute("ABW", "OMN"))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage("Country [ABW] doesn't have common borders with other countries.");
     }
 
     @Test
-    void failsToCalculateRouteForToCountryWithoutBorders() {
+    void throwsExceptionIfCalculatesRouteForToCountryWithoutBorders() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute("OMN", "ABW"))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage("Country [ABW] doesn't have common borders with other countries.");
     }
 
     @Test
-    void failsToCalculateRouteForCountriesWithoutLandBorders() {
+    void throwsExceptionIfCalculatesRouteForCountriesWithoutLandBorders() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute("OMN", "GBR"))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage("Unable to find route between [OMN] and [GBR].");
     }
 
     @Test
-    void failsToCalculateRouteForCountriesFromDifferentRegions() {
+    void throwsExceptionIfCalculatesRouteForCountriesFromDifferentRegions() {
       assertThatThrownBy(() -> routeFinderService.calculateRoute("OMN", "CHL"))
           .isInstanceOf(RouteCalculationException.class)
           .hasMessage(

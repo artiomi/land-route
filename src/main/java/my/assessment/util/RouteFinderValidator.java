@@ -14,22 +14,22 @@ import org.springframework.util.CollectionUtils;
 public class RouteFinderValidator {
 
   private static final List<String> AFR_EURASIA = List.of("Asia", "Europe", "Africa");
-  private static final Map<String, List<String>> ALLOWED_REGIONS = new HashMap<>();
+  private static final Map<String, List<String>> ALLOWED_REGIONS_MAPPING = new HashMap<>();
 
   static {
-    ALLOWED_REGIONS.put("Europe", AFR_EURASIA);
-    ALLOWED_REGIONS.put("Asia", AFR_EURASIA);
-    ALLOWED_REGIONS.put("Africa", AFR_EURASIA);
-    ALLOWED_REGIONS.put("Americas", List.of("Americas"));
-    ALLOWED_REGIONS.put("Antarctic", List.of("Antarctic"));
-    ALLOWED_REGIONS.put("Oceania", List.of("Oceania"));
+    ALLOWED_REGIONS_MAPPING.put("Europe", AFR_EURASIA);
+    ALLOWED_REGIONS_MAPPING.put("Asia", AFR_EURASIA);
+    ALLOWED_REGIONS_MAPPING.put("Africa", AFR_EURASIA);
+    ALLOWED_REGIONS_MAPPING.put("Americas", List.of("Americas"));
+    ALLOWED_REGIONS_MAPPING.put("Antarctic", List.of("Antarctic"));
+    ALLOWED_REGIONS_MAPPING.put("Oceania", List.of("Oceania"));
   }
 
 
   public void validate(Country from, Country to) {
     if (from.getId().equals(to.getId())) {
       throw new RouteCalculationException(
-          String.format("Can't find route for same country %s and %s.", from.getId(), to.getId()));
+          String.format("It's not allowed to have similar from: %s and to: %s countries.", from.getId(), to.getId()));
     }
     if (CollectionUtils.isEmpty(from.getBorders())) {
       throw missingBorders(from.getId());
@@ -37,7 +37,7 @@ public class RouteFinderValidator {
     if (CollectionUtils.isEmpty(to.getBorders())) {
       throw missingBorders(to.getId());
     }
-    List<String> mappedRegions = ALLOWED_REGIONS.get(from.getRegion());
+    List<String> mappedRegions = ALLOWED_REGIONS_MAPPING.get(from.getRegion());
     if (mappedRegions == null || !mappedRegions.contains(to.getRegion())) {
       String message = String.format(
           "Countries %s and %s are located in regions: %s and %s, which don't have common borders.",
