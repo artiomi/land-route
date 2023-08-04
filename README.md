@@ -4,7 +4,7 @@ Project exposes endpoint `GET /routing/{from}/{to}`, where `from` and `to` are [
 #### Example
 Request: `curl -X 'GET' 'http://localhost:8080/routing/PRT/SWE'  -H 'accept: application/json' `<br>
 Will return response: 
-```
+```json
 {
   "route": ["PRT", "ESP", "FRA", "DEU", "POL", "RUS", "FIN", "SWE"]
 }
